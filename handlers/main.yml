@@ -1,0 +1,6 @@
+---
+
+- name: restart nextcloud-spreed-signaling
+  ansible.builtin.service:
+    name: nextcloud-spreed-signaling
+    state: restarted

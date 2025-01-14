@@ -1,0 +1,35 @@
+---
+
+- name: install struktur spreed HPB from package
+  ansible.builtin.include_tasks: hpb-deb.yml
+  when: not struktur_spreed_from_source|default(false)
+
+- name: install struktur spreed HPB from source
+  ansible.builtin.include_tasks: hpb-src.yml
+  when: struktur_spreed_from_source|default(false)
+
+- name: configure nctalk signaling service
+  ansible.builtin.template:
+    src: nextcloud-spreed-signaling-server.conf.j2
+    dest: /etc/nextcloud-spreed-signaling/server.conf
+    mode: "0640"
+    owner: nextcloud-spreed-signaling
+    group: root
+  notify: restart nextcloud-spreed-signaling
+
+# network-online not working too; so we use a cron job
+- name: ensure late start of janus service
+  ansible.builtin.lineinfile:
+    dest: /lib/systemd/system/janus.service
+    line: "After=basic.target"
+    regexp: "^After="
+
+- name: fix late restart of janus via cron
+  ansible.builtin.copy:
+    src: fixjanus
+    dest: /etc/cron.d/fixjanus
+    owner: root
+    group: root
+    mode: "0644"
+
+# FIXME: add turn and signaling server on nextcloud site via occ

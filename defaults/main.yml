@@ -1,0 +1,62 @@
+---
+
+# set this to the FQDN of your nextcloud instance
+nextcloud_hostname: UNDEFINED
+nextcloud_url: https://{{ nextcloud_hostname }}
+
+# set the desired distro:
+# see https://packages.struktur.de/nextcloud/spreed
+# options:
+#   ubuntu noble
+#   ubuntu jammy
+#   ubuntu focal
+#   ubuntu bionic
+#   debian buster
+#   debian bullseye
+#   debian bookworm
+struktur_spreed_distro: "debian bookworm"
+
+# enter a valid customer id if you like to install
+# packages from the repo packages.struktur.de
+struktur_spreed_customerid: UNDEFINED
+
+struktur_spreed_apt_key_name: struktur-ag-deb-sign-1.pub
+struktur_spreed_apt_key_url: "https://packages.struktur.de/nextcloud/spreed/{{ struktur_spreed_customerid }}/{{ struktur_spreed_apt_key_name }}"
+
+struktur_spreed_apt_repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/{{ struktur_spreed_apt_key_name }}] https://packages.struktur.de/nextcloud/spreed/{{ struktur_spreed_customerid }}/{{ struktur_spreed_distro }} main"
+
+# packages to install from struktur_spreed_apt_repo
+struktur_spreed_apt_pkg:
+  - nextcloud-spreed-services
+
+spreed_maxstreambitrate: 262144
+
+# this is required
+spreed_secret: UNDEFINED
+
+# install from source
+struktur_spreed_from_source: false
+
+# required for build stuff
+struktur_spreed_build_requirememnts:
+  - git
+  - automake
+  - make
+  - golang
+  - build-essential
+
+# you can define a tag / version to pin the build too
+# struktur_spreed_build_version: v0.4.1
+
+# just for build from src
+
+# see https://github.com/nats-io/nats-server/releases
+nats_version: 2.7.2
+nats_download_url: https://github.com/nats-io/nats-server/releases/download/v{{ nats_version }}/nats-server-v{{ nats_version }}-amd64.deb
+
+# janus_cert_pem: /etc/letsencrypt/live/{{ ansible_hostname }}/cert.pem
+# janus_cert_key: /etc/letsencrypt/live/{{ ansible_hostname }}/privkey.pem
+# spreed_cert_pem: /etc/letsencrypt/live/{{ ansible_hostname }}/cert.pem
+# spreed_cert_key: /etc/letsencrypt/live/{{ ansible_hostname }}/privkey.pem
+
+...
