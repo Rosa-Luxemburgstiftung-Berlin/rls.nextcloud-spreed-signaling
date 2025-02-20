@@ -29,22 +29,22 @@ key = /etc/nginx/ssl/server.key
 [app]
 # Set to "true" to install pprof debug handlers.
 # See "https://golang.org/pkg/net/http/pprof/" for further information.
-debug = false
+debug = {{ spreed_signaling_server.app.debug }}
 
 [sessions]
 # Secret value used to generate checksums of sessions. This should be a random
 # string of 32 or 64 bytes.
-hashkey = adf8a1573f9508cd7d88e651e20dd0e32116ce3ab883ff0ee54c6f0f2f505fe3
+hashkey = {{ spreed_signaling_server.sessions.hashkey }}
 
 # Optional key for encrypting data in the sessions. Must be either 16, 24 or
 # 32 bytes.
 # If no key is specified, data will not be encrypted (not recommended).
-blockkey = ed6d4b3a632ce4395bdd81aded8c14ac
+blockkey = {{ spreed_signaling_server.sessions.blockkey }}
 
 [clients]
 # Shared secret for connections from internal clients. This must be the same
 # value as configured in the respective internal services.
-internalsecret = 5b6e74a323fa020022afaf1f83d45e6bd0cdbff6f1f68f34b5254364725e9a41
+internalsecret = {{ spreed_signaling_server.clients.internalsecret }}
 
 [backend]
 # Comma-separated list of backend ids from which clients are allowed to connect
@@ -186,6 +186,4 @@ maxstreambitrate = {{ spreed_maxstreambitrate | default('1048576') }}
 [stats]
 # Comma-separated list of IP addresses that are allowed to access the stats
 # endpoint. Leave empty (or commented) to only allow access from "127.0.0.1".
-#allowed_ips =
-allowed = {{ nextcloud_hostname }}
-maxstreambitrate = 262144
+allowed_ips = {{ spreed_signaling_server.stats.allowed_ips }}
