@@ -62,8 +62,6 @@ janus_cert_key: /etc/letsencrypt/live/{{ ansible_hostname }}/privkey.pem
 spreed_cert_pem: /etc/letsencrypt/live/{{ ansible_hostname }}/cert.pem
 spreed_cert_key: /etc/letsencrypt/live/{{ ansible_hostname }}/privkey.pem
 
-spreed_maxstreambitrate: 1048576
-
 spreed_signaling_server:
   app:
     debug: 'false'
@@ -74,5 +72,14 @@ spreed_signaling_server:
     internalsecret: 451e49adcc4766ee145bedd7687dba341bd8cf2fe06077e254353578a534dbb2
   stats:
     allowed_ips: 127.0.0.1
+  backend:
+    allowall: 'false'
+    secret: "{{ spreed_secret | default('UNDEFINED') }}"
+    timeout: 20
+    connectionsperhost: 8
+    backends:
+      backend1:
+        url: "{{ nextcloud_url }}"
+        secret: "{{ spreed_secret | default('UNDEFINED') }}"
 
 ...

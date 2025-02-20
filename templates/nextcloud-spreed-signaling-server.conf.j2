@@ -52,22 +52,22 @@ internalsecret = {{ spreed_signaling_server.clients.internalsecret }}
 # "abc12345" on backend 1 will be in a different room than clients connected to
 # a room with the same name on backend 2. Also sessions connected from different
 # backends will not be able to communicate with each other.
-backends = backend-1
+backends = {{ spreed_signaling_server.backend.backends.keys() | join(',') }}
 
 # Allow any hostname as backend endpoint. This is extremely insecure and should
 # only be used while running the benchmark client against the server.
-allowall = false
+allowall = {{ spreed_signaling_server.backend.allowall | default('false') }}
 
 # Common shared secret for requests from and to the backend servers if
 # "allowall" is enabled. This must be the same value as configured in the
 # Nextcloud admin ui.
-#secret = the-shared-secret
+secret = {{ spreed_signaling_server.backend.secret }}
 
 # Timeout in seconds for requests to the backend.
-timeout = 20
+timeout = {{ spreed_signaling_server.backend.timeout }}
 
 # Maximum number of concurrent backend connections per host.
-connectionsperhost = 8
+connectionsperhost = {{ spreed_signaling_server.backend.connectionsperhost }}
 
 # If set to "true", certificate validation of backend endpoints will be skipped.
 # This should only be enabled during development, e.g. to work with self-signed
@@ -78,11 +78,20 @@ connectionsperhost = 8
 # section names must match the ids used in "backends" above.
 [backend-1]
 # URL of the Nextcloud instance
-url = {{ nextcloud_url }}
+url = https://cloud.domain.invalid
 
 # Shared secret for requests from and to the backend servers. This must be the
 # same value as configured in the Nextcloud admin ui.
-secret = {{ spreed_secret }}
+secret = the-shared-secret
+
+# configured backends via ansible
+{% for backend, backendcfg in spreed_signaling_server.backend.backends.items() %}
+[{{ backend }}]
+{% for k, v in backendcfg.items() %}
+{{ k }} = {{ v }}
+{% endfor %}
+
+{% endfor %}
 
 [nats]
 # Url of NATS backend to use. This can also be a list of URLs to connect to
