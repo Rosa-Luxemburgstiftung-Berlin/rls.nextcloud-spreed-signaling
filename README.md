@@ -8,3 +8,48 @@ it supports instaling the nextcloud-spreed-signaling server from:
   * debian (backports)
   * build from src
   * struktur ag repo (requires a subscription key)
+
+## debian package from backports
+
+```yaml
+- name: install deb from backports
+  hosts: talk
+  vars:
+    nextcloud_hostname: cloud.next.invalid.com
+    spreed_secret: Al4iem0s
+  roles:
+    - rls.nextcloud-spreed-signaling
+```
+
+## build from src
+
+```yaml
+- name: install
+  hosts: talk
+  vars:
+    nextcloud_hostname: cloud.next.invalid.com
+    spreed_secret: Al4iem0s
+    struktur_spreed_from_source: true
+    struktur_spreed_build_version: v2.0.2
+    golang_version: '1.23.5'
+    golang_install_dir: /opt/go
+  roles:
+    - gantsign.golang
+    - rls.nextcloud-spreed-signaling
+```
+
+## debian package from struktur ag repo
+
+requires a subscription key
+
+```yaml
+- name: install
+  hosts: talk
+  vars:
+    nextcloud_hostname: cloud.next.invalid.com
+    spreed_secret: Al4iem0s
+    struktur_spreed_customerid: ABC123xyz890
+  roles:
+    - rls.nextcloud-spreed-signaling
+```
+
