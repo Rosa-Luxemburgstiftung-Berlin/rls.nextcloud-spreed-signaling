@@ -1,12 +1,20 @@
 ---
 
+- name: install  nextcloud-spreed-signaling HPB an from debian
+  ansible.builtin.include_tasks: hpb-deb-orig.yml
+  when:
+    - not struktur_spreed_from_source | default(false)
+    - struktur_spreed_customerid == 'UNDEFINED'
+
 - name: install struktur spreed HPB from package
-  ansible.builtin.include_tasks: hpb-deb.yml
-  when: not struktur_spreed_from_source|default(false)
+  ansible.builtin.include_tasks: hpb-deb-struktur.yml
+  when:
+    - not struktur_spreed_from_source | default(false)
+    - not struktur_spreed_customerid == 'UNDEFINED'
 
 - name: install struktur spreed HPB from source
   ansible.builtin.include_tasks: hpb-src.yml
-  when: struktur_spreed_from_source|default(false)
+  when: struktur_spreed_from_source | default(false)
 
 - name: configure nctalk signaling service
   ansible.builtin.template:
@@ -32,4 +40,4 @@
     group: root
     mode: "0644"
 
-# FIXME: add turn and signaling server on nextcloud site via occ
+# TODO: add turn and signaling server on nextcloud site via occ

@@ -29,6 +29,10 @@ struktur_spreed_apt_repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/{{ stru
 struktur_spreed_apt_pkg:
   - nextcloud-spreed-services
 
+debian_use_backports: true
+debian_spreed_apt_pkg:
+  - nextcloud-spreed-signaling
+
 spreed_maxstreambitrate: 262144
 
 # this is required
@@ -44,6 +48,7 @@ struktur_spreed_build_requirememnts:
   - make
   - golang
   - build-essential
+  - protobuf-compiler
 
 # you can define a tag / version to pin the build too
 # struktur_spreed_build_version: v0.4.1

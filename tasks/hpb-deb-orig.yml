@@ -1,0 +1,18 @@
+---
+
+- name: enable backports repo
+  ansible.builtin.deb822_repository:
+    components:
+      - main
+    name: backports
+    signed_by: /usr/share/keyrings/debian-archive-keyring.gpg
+    suites:
+      - "{{ ansible_distribution_release }}-backports"
+    uris:
+      - "{{ debian_repo_uri | default('http://deb.debian.org/debian') }}"
+  when: debian_use_backports | default(true)
+
+- name: install spreed packages
+  ansible.builtin.apt:
+    name: "{{ debian_spreed_apt_pkg }}"
+    update_cache: true
