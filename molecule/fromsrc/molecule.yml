@@ -1,0 +1,28 @@
+---
+driver:
+  name: docker
+platforms:
+  - name: instance
+    image: debian:${MOLECULE_DISTRO:-debian12}
+    dockerfile: ../deborig/Dockerfile-${MOLECULE_DISTRO:-debian12}.j2
+    privileged: true
+    override_command: false
+    tmpfs:
+      - /run
+      - /run/lock
+      - /tmp
+    capabilities:
+      - SYS_ADMIN
+    security_opts:
+      - seccomp=unconfined
+
+dependency:
+      name: galaxy
+      options:
+        role-file: fromsrc-requirements.yml
+
+provisioner:
+  name: ansible
+
+verifier:
+  name: ansible
