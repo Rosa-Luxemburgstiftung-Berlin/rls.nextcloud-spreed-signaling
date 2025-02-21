@@ -23,6 +23,8 @@ it supports instaling the nextcloud-spreed-signaling server from:
 
 ## build from src
 
+requires role [gantsign.golang](/gantsign/ansible-role-golang)
+
 ```yaml
 - name: install
   hosts: talk
