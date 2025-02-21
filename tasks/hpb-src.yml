@@ -1,5 +1,12 @@
 ---
 
+- name: ensure the deb packages are uninstalled
+  ansible.builtin.apt:
+    name: "{{ debian_spreed_apt_pkg + struktur_spreed_apt_pkg }}"
+    state: absent
+    purge: true
+    autoremove: true
+
 - name: install build requirements
   ansible.builtin.apt:
     name: "{{ struktur_spreed_build_requirememnts }}"
