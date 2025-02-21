@@ -131,14 +131,9 @@
     - janus.plugin.videoroom.jcfg
 
 - name: backup original janus files
-  ansible.builtin.copy:
-    src: "/etc/janus/{{ item }}"
-    dest: "/etc/janus/{{ item }}.orig"
-    remote_src: true
-    force: false
-    owner: root
-    group: root
-    mode: "0644"
+  ansible.builtin.command: mv /etc/janus/{{ item }} /etc/janus/{{ item }}.orig
+  args:
+    creates: /etc/janus/{{ item }}.orig
   with_items:
     - janus.jcfg
     - janus.transport.websockets.jcfg
