@@ -10,6 +10,7 @@
 - name: install build requirements
   ansible.builtin.apt:
     name: "{{ struktur_spreed_build_requirememnts }}"
+    update_cache: true
 
 - name: clone repo nextcloud-spreed-signaling
   ansible.builtin.git:
