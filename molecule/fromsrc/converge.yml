@@ -5,13 +5,7 @@
     struktur_spreed_from_source: true
     struktur_spreed_build_version: v2.0.2
     golang_version: '1.23.5'
-    golang_install_dir: /opt/go 
-  tasks:
-    - name: "Include role gantsign.golang"
-      include_role:
-        name: "gantsign.golang"
-    - name: "reload facts"
-      ansible.builtin.setup:
-    - name: "Include role rls.nextcloud-spreed-signaling"
-      include_role:
-        name: "rls.nextcloud-spreed-signaling"
+    golang_install_dir: /opt/go
+  roles:
+    - gantsign.golang
+    - rls.nextcloud-spreed-signaling

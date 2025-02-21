@@ -1,7 +1,5 @@
 ---
 - name: Converge
   hosts: all
-  tasks:
-    - name: "Include role"
-      include_role:
-        name: "rls.nextcloud-spreed-signaling"
+  roles:
+    - rls.nextcloud-spreed-signaling

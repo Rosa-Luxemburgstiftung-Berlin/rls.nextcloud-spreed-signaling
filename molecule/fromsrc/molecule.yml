@@ -17,9 +17,9 @@ platforms:
       - seccomp=unconfined
 
 dependency:
-      name: galaxy
-      options:
-        role-file: fromsrc-requirements.yml
+  name: galaxy
+  options:
+    role-file: fromsrc-requirements.yml
 
 provisioner:
   name: ansible
