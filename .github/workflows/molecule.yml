@@ -31,19 +31,14 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: Install test dependencies.
         run: pip3 install ${{ matrix.pip3deps }}
-
-      - name: Install collections required on ansible 2.9
-        run: ansible-galaxy collection install community.general
-        if: ${{ matrix.ansible == 'legacy' }}
 
       - name: run molecule tests
         run: molecule test
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
-          molecule_skip_rebuild_all: true
           MOLECULE_DISTRO: ${{ matrix.distro }}
