@@ -41,6 +41,11 @@ jobs:
       - name: Install test dependencies.
         run: pip3 install ${{ matrix.pip3deps }}
 
+      - name: debug
+        run: |
+          pwd
+          ls
+
       - name: run molecule tests
         run: molecule test --scenario-name ${{ matrix.scenario }}
         working-directory: rls.nextcloud-spreed-signaling
