@@ -1,5 +1,11 @@
 ---
 
+- name: install prereq
+  ansible.builtin.apt:
+    name: python3-debian
+    update_cache: true
+  when: debian_use_backports | default(true)
+
 - name: enable backports repo
   ansible.builtin.deb822_repository:
     components:
