@@ -1,29 +1,34 @@
 ---
 
-- name: install prereq
-  ansible.builtin.apt:
-    name: python3-debian
-    update_cache: true
+- name: install from backports ...
   when: debian_use_backports | default(true)
+  block:
+  - name: install prereq
+    ansible.builtin.apt:
+      name: python3-debian
+      update_cache: true
 
-- name: enable backports repo
-  ansible.builtin.deb822_repository:
-    components:
-      - main
-    name: backports
-    signed_by: /usr/share/keyrings/debian-archive-keyring.gpg
-    suites:
-      - "{{ ansible_distribution_release }}-backports"
-    uris:
-      - "{{ debian_repo_uri | default('http://deb.debian.org/debian') }}"
-  when: debian_use_backports | default(true)
+  - name: enable backports repo
+    ansible.builtin.deb822_repository:
+      components:
+        - main
+      name: backports
+      signed_by: /usr/share/keyrings/debian-archive-keyring.gpg
+      suites:
+        - "{{ ansible_distribution_release }}-backports"
+      uris:
+        - "{{ debian_repo_uri | default('http://deb.debian.org/debian') }}"
 
-- name: install spreed packages from backports
-  ansible.builtin.apt:
-    name: "{{ debian_spreed_apt_pkg }}"
-    default_release: "{{ ansible_distribution_release }}-backports"
-    update_cache: true
-  when: debian_use_backports | default(true)
+  # required for molecule
+  - name: apt-get update
+    ansible.builtin.apt:
+      update_cache: yes
+
+  - name: install spreed packages from backports
+    ansible.builtin.apt:
+      name: "{{ debian_spreed_apt_pkg }}"
+      default_release: "{{ ansible_distribution_release }}-backports"
+      update_cache: true
 
 - name: install spreed packages
   ansible.builtin.apt:
