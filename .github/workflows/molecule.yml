@@ -14,7 +14,7 @@ jobs:
       matrix:
         scenario:
           - deborig
-          #- fromsrc
+          - fromsrc
         ansible:
           - latest
           #- pinned
@@ -37,6 +37,7 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.9
+          # python-version: 3.11 - w/ py 3.11 the roles are not found! ftw?
 
       - name: Install test dependencies.
         run: pip3 install ${{ matrix.pip3deps }}
