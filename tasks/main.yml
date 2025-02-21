@@ -1,6 +1,6 @@
 ---
 
-- name: install  nextcloud-spreed-signaling HPB an from debian
+- name: install  nextcloud-spreed-signaling HPB from debian
   ansible.builtin.include_tasks: hpb-deb-orig.yml
   when:
     - not struktur_spreed_from_source | default(false)
