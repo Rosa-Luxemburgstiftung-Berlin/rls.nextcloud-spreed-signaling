@@ -40,9 +40,8 @@ jobs:
         run: pip3 install ${{ matrix.pip3deps }}
 
       - name: run molecule tests
-        run: molecule test
+        run: molecule test --scenario-name ${{ matrix.scenario }}
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
           MOLECULE_DISTRO: ${{ matrix.distro }}
-          molecule_args: --scenario-name ${{ matrix.scenario }}
