@@ -21,16 +21,9 @@
     src: nextcloud-spreed-signaling-server.conf.j2
     dest: /etc/nextcloud-spreed-signaling/server.conf
     mode: "0640"
-    owner: nextcloud-spreed-signaling
+    owner: "{{ signaling_user | default('nextcloud-spreed-signaling') }}"
     group: root
   notify: restart nextcloud-spreed-signaling
-
-# network-online not working too; so we use a cron job
-- name: ensure late start of janus service
-  ansible.builtin.lineinfile:
-    dest: /lib/systemd/system/janus.service
-    line: "After=basic.target"
-    regexp: "^After="
 
 - name: fix late restart of janus via cron
   ansible.builtin.copy:
