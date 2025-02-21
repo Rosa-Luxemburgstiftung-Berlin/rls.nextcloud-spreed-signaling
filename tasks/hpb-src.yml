@@ -19,11 +19,19 @@
     version: "{{ struktur_spreed_build_version | default(omit) }}"
     update: false
 
+- name: build nextcloud-spreed-signaling using golang_install_dir {{ golang_install_dir }}
+  ansible.builtin.shell: PATH={{ golang_install_dir }}/bin:$PATH make build
+  args:
+    chdir: /var/tmp/nextcloud-spreed-signaling
+    creates: /var/tmp/nextcloud-spreed-signaling/bin/signaling
+  when: golang_install_dir is defined
+
 - name: build nextcloud-spreed-signaling
   ansible.builtin.command: make build
   args:
     chdir: /var/tmp/nextcloud-spreed-signaling
     creates: /var/tmp/nextcloud-spreed-signaling/bin/signaling
+  when: not golang_install_dir is defined
 
 - name: create user
   ansible.builtin.user:
