@@ -43,6 +43,7 @@ jobs:
 
       - name: run molecule tests
         run: molecule test --scenario-name ${{ matrix.scenario }}
+        working-directory: rls.nextcloud-spreed-signaling
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
