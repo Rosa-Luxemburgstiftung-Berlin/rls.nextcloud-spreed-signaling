@@ -14,7 +14,16 @@
 
 - name: install struktur spreed HPB from source
   ansible.builtin.include_tasks: hpb-src.yml
-  when: struktur_spreed_from_source | default(false)
+  when:
+    - struktur_spreed_from_source | default(false)
+    - struktur_spreed_customerid == 'UNDEFINED'
+
+- name: install and configure nats-server
+  ansible.builtin.include_tasks: nats.yml
+  when: struktur_spreed_customerid == 'UNDEFINED'
+
+- name: install and configure janus
+  ansible.builtin.include_tasks: janus.yml
 
 - name: configure nctalk signaling service
   ansible.builtin.template:
