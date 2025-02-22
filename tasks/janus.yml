@@ -15,6 +15,7 @@
         - janus.jcfg
         - janus.transport.websockets.jcfg
         - janus.plugin.videoroom.jcfg
+      notify: restart janus
 
     - name: backup original janus files
       ansible.builtin.command: mv /etc/janus/{{ item }} /etc/janus/{{ item }}.orig
@@ -24,6 +25,7 @@
         - janus.jcfg
         - janus.transport.websockets.jcfg
         - janus.plugin.videoroom.jcfg
+      notify: restart janus
 
     - name: link spreed cfg files for janus
       ansible.builtin.file:
@@ -37,5 +39,6 @@
         - janus.jcfg
         - janus.transport.websockets.jcfg
         - janus.plugin.videoroom.jcfg
+      notify: restart janus
 
 ...
