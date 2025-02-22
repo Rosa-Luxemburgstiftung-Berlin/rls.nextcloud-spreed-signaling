@@ -1,0 +1,41 @@
+---
+- name: install janus
+  ansible.builtin.apt:
+    name: janus
+
+- name: configure janus for nextcloud-spreed-signaling
+  when: struktur_spreed_customerid == 'UNDEFINED'
+  block:
+    - name: configure janus for nextcloud-spreed-signaling
+      ansible.builtin.template:
+        src: "{{ item }}.spreed.j2"
+        dest: "/etc/janus/{{ item }}.spreed"
+        mode: "0644"
+      with_items:
+        - janus.jcfg
+        - janus.transport.websockets.jcfg
+        - janus.plugin.videoroom.jcfg
+
+    - name: backup original janus files
+      ansible.builtin.command: mv /etc/janus/{{ item }} /etc/janus/{{ item }}.orig
+      args:
+        creates: /etc/janus/{{ item }}.orig
+      with_items:
+        - janus.jcfg
+        - janus.transport.websockets.jcfg
+        - janus.plugin.videoroom.jcfg
+
+    - name: link spreed cfg files for janus
+      ansible.builtin.file:
+        src: "/etc/janus/{{ item }}.spreed"
+        dest: "/etc/janus/{{ item }}"
+        owner: root
+        group: root
+        mode: "0644"
+        state: link
+      with_items:
+        - janus.jcfg
+        - janus.transport.websockets.jcfg
+        - janus.plugin.videoroom.jcfg
+
+...
