@@ -4,3 +4,13 @@
   ansible.builtin.service:
     name: nextcloud-spreed-signaling
     state: restarted
+
+- name: restart janus
+  ansible.builtin.service:
+    name: janus
+    state: restarted
+
+- name: restart nats-server
+  ansible.builtin.service:
+    name: nats-server
+    state: restarted
