@@ -4,6 +4,9 @@
 nextcloud_hostname: UNDEFINED
 nextcloud_url: https://{{ nextcloud_hostname }}
 
+# #################################################
+# for installing the deb package from struktur ag #
+# #################################################
 # set the desired distro:
 # see https://packages.struktur.de/nextcloud/spreed
 # options:
@@ -18,6 +21,7 @@ struktur_spreed_distro: "debian bookworm"
 
 # enter a valid customer id if you like to install
 # packages from the repo packages.struktur.de
+# this is REQUIRED  for installing the deb package from struktur ag
 struktur_spreed_customerid: UNDEFINED
 
 struktur_spreed_apt_key_name: struktur-ag-deb-sign-1.pub
@@ -28,18 +32,22 @@ struktur_spreed_apt_repo: "deb [arch=amd64 signed-by=/usr/share/keyrings/{{ stru
 # packages to install from struktur_spreed_apt_repo
 struktur_spreed_apt_pkg:
   - nextcloud-spreed-services
+# #################################################
 
+
+# ######################
+# original deb package #
+# ######################
 debian_use_backports: true
 debian_spreed_apt_pkg:
   - nextcloud-spreed-signaling
 
-spreed_maxstreambitrate: 262144
-
-# this is required
-spreed_secret: UNDEFINED
-
-# install from source
+#######################
+# install from source #
+#######################
 struktur_spreed_from_source: false
+# you can define a tag / version to pin the build too
+# struktur_spreed_build_version: v0.4.1
 
 # use gantsign.golang role in order to install a newer version of golang
 # set to a version in order to not install the debian version
@@ -53,10 +61,16 @@ struktur_spreed_build_requirememnts:
   - "{% if not golang_version %}golang{% else %}git{% endif %}"
   - build-essential
   - protobuf-compiler
+#######################
 
-# you can define a tag / version to pin the build too
-# struktur_spreed_build_version: v0.4.1
 
+#######################
+# nats
+#######################
+# install nats from origianl debian
+nats_use_debian: true
+nats_deb: nats-server
+# if not nats_use_debian
 # see https://github.com/nats-io/nats-server/releases
 nats_version: 2.7.2
 nats_download_url: https://github.com/nats-io/nats-server/releases/download/v{{ nats_version }}/nats-server-v{{ nats_version }}-amd64.deb
@@ -68,6 +82,11 @@ janus_cert_key: /etc/letsencrypt/live/{{ ansible_hostname }}/privkey.pem
 # certs for spreed
 spreed_cert_pem: /etc/letsencrypt/live/{{ ansible_hostname }}/cert.pem
 spreed_cert_key: /etc/letsencrypt/live/{{ ansible_hostname }}/privkey.pem
+
+spreed_maxstreambitrate: 262144
+
+# this is required
+spreed_secret: UNDEFINED
 
 spreed_signaling_server:
   app:
