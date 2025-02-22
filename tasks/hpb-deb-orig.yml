@@ -1,7 +1,9 @@
 ---
 
 - name: install from backports ...
-  when: debian_use_backports | default(true)
+  when:
+    - debian_use_backports | default(true)
+    - ansible_distribution == 'Debian'
   block:
     - name: install prereq
       ansible.builtin.apt:
