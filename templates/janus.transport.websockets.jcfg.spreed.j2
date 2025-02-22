@@ -1,10 +1,19 @@
 # {{ ansible_managed }}
-
 general: {
+    json = "indented"               # Whether the JSON messages should be indented (default),
+
+    ws = true                       # Whether to enable the WebSockets API
+    ws_port = 8188                  # WebSockets server port
     ws_ip = "127.0.0.1"
+    wss = false                     # Whether to enable secure WebSockets
 }
+
 admin: {
+    admin_ws = false                    # Whether to enable the Admin API WebSockets API
+    admin_ws_port = 7188                # Admin API WebSockets server port, if enabled
+    admin_wss = false                   # Whether to enable the Admin API secure WebSockets
 }
+
 certificates: {
 {% if spreed_cert_pem is defined and spreed_cert_key is defined %}
     cert_pem = "{{ spreed_cert_pem }}"
