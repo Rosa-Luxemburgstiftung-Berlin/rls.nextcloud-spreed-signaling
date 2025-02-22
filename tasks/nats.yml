@@ -25,6 +25,7 @@
     owner: root
     group: nats
     backup: true
+  notify: restart nats-server
 
 - name: create nats-server.service
   ansible.builtin.template:
@@ -33,7 +34,7 @@
     mode: "0644"
     owner: root
     group: root
-  register: service
+  when: not nats_use_debian
 
 - name: enable nats-server service
   ansible.builtin.systemd:
