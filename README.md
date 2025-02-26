@@ -55,3 +55,11 @@ requires a subscription key
     - rls.nextcloud-spreed-signaling
 ```
 
+## use tls/ssl
+
+define the vars:
+
+  * `spreed_cert_pem`
+  * `spreed_cert_key`
+  * `janus_cert_pem`
+  * `janus_cert_key`
