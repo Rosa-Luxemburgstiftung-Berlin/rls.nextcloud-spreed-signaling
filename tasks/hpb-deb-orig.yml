@@ -40,4 +40,4 @@
 
 - name: configure signaling_user
   ansible.builtin.set_fact:
-    signaling_user: root
+    signaling_user: _signaling
