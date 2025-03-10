@@ -165,15 +165,24 @@ maxstreambitrate = {{ spreed_maxstreambitrate | default('1048576') }}
 
 [turn]
 # API key that the MCU will need to send when requesting TURN credentials.
-apikey = "{{ turn_rest_api_key }}"
+# apikey = whateveryoudefined
+{% if spreed_signaling_server.turn.apikey is defined %}
+apikey = "{{ spreed_signaling_server.turn.apikey }}"
+{% endif %} 
 
 # The shared secret to use for generating TURN credentials. This must be the
 # same as on the TURN server.
 #secret = 6d1c17a7-c736-4e22-b02c-e2955b7ecc64
+{% if spreed_signaling_server.turn.secret is defined %}
+secret = {{ spreed_signaling_server.turn.secret }}
+{% endif %}
 
 # A comma-separated list of TURN servers to use. Leave empty to disable the
 # TURN REST API.
 #servers = turn:1.2.3.4:9991?transport=udp,turn:1.2.3.4:9991?transport=tcp
+{% if spreed_signaling_server.turn.servers is defined %}
+servers = {{ spreed_signaling_server.turn.servers }}
+{% endif %} 
 
 [geoip]
 # License key to use when downloading the MaxMind GeoIP database. You can

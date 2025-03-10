@@ -107,7 +107,8 @@ spreed_signaling_server:
     allowed_ips: 127.0.0.1
   turn:
     apikey: "{{ turn_rest_api_key | default('UNDEFINED') }}"
-    servers: "turn:1.2.3.4:9991?transport=udp,turn:1.2.3.4:9991?transport=tcp"
+    #secret: turn_static_auth_secret
+    #servers: "turn:1.2.3.4:9991?transport=udp,turn:1.2.3.4:9991?transport=tcp"
   backend:
     allowall: 'false'
     secret: "{{ spreed_secret | default('UNDEFINED') }}"
