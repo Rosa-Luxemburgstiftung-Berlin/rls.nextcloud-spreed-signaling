@@ -87,6 +87,13 @@ spreed_maxstreambitrate: 262144
 
 # this is required
 spreed_secret: UNDEFINED
+turn_rest_api_key: UNDEFINED
+
+janus:
+  nat:
+    # stun_server: stun.nextcloud.com
+    # stun_port: 3478
+    turn_rest_api_key: "{{ turn_rest_api_key }}"
 
 spreed_signaling_server:
   app:
@@ -98,6 +105,9 @@ spreed_signaling_server:
     internalsecret: 451e49adcc4766ee145bedd7687dba341bd8cf2fe06077e254353578a534dbb2
   stats:
     allowed_ips: 127.0.0.1
+  turn:
+    apikey: "{{ turn_rest_api_key | default('UNDEFINED') }}"
+    servers: "turn:1.2.3.4:9991?transport=udp,turn:1.2.3.4:9991?transport=tcp"
   backend:
     allowall: 'false'
     secret: "{{ spreed_secret | default('UNDEFINED') }}"

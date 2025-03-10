@@ -51,8 +51,16 @@ media: {
     #dscp = 46
 }
 nat: {
-    stun_server = "stun.nextcloud.com";
-    stun_port = 3478
+{% if janus.nat.stun_server is defined %}
+    stun_server = "{{ janus.nat.stun_server }}"
+{% else %}
+    #stun_server = "stun.nextcloud.com"
+{% endif %}
+{% if janus.nat.stun_port is defined %}
+    stun_port = janus.nat.stun_port
+{% else %}
+    #stun_port = 3478
+{% endif %}
     nice_debug = false
     full_trickle = true
     #ice_lite = true
@@ -66,7 +74,7 @@ nat: {
     #turn_user = "myuser"
     #turn_pwd = "mypassword"
     #turn_rest_api = "http://yourbackend.com/path/to/api"
-    #turn_rest_api_key = "anyapikeyyoumayhaveset"
+    turn_rest_api_key = "{{ janus.nat.turn_rest_api_key }}"
     #turn_rest_api_method = "GET"
     #ice_enforce_list = "eth0"
     ice_ignore_list = "vmnet,docker";

@@ -165,7 +165,7 @@ maxstreambitrate = {{ spreed_maxstreambitrate | default('1048576') }}
 
 [turn]
 # API key that the MCU will need to send when requesting TURN credentials.
-#apikey = the-api-key-for-the-rest-service
+apikey = "{{ turn_rest_api_key }}"
 
 # The shared secret to use for generating TURN credentials. This must be the
 # same as on the TURN server.
