@@ -167,7 +167,7 @@ maxstreambitrate = {{ spreed_maxstreambitrate | default('1048576') }}
 # API key that the MCU will need to send when requesting TURN credentials.
 # apikey = whateveryoudefined
 {% if spreed_signaling_server.turn.apikey is defined %}
-apikey = "{{ spreed_signaling_server.turn.apikey }}"
+apikey = {{ spreed_signaling_server.turn.apikey }}
 {% endif %} 
 
 # The shared secret to use for generating TURN credentials. This must be the
