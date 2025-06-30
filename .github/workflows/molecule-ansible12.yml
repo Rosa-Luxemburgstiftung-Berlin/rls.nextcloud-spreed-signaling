@@ -54,3 +54,4 @@ jobs:
           ANSIBLE_FORCE_COLOR: '1'
           molecule_struktur_spreed_build_version: ${{ matrix.molecule_struktur_spreed_build_version }}
           MOLECULE_DISTRO: ${{ matrix.distro }}
+          ANSIBLE_ALLOW_BROKEN_CONDITIONALS: true
