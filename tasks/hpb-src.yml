@@ -24,6 +24,7 @@
   ansible.builtin.file:
     path: /var/tmp/nextcloud-spreed-signaling/bin/
     state: absent
+  notify: restart nextcloud-spreed-signaling
   when: struktur_spreed_build_update | default(false)
 
 - name: build nextcloud-spreed-signaling using golang_install_dir {{ golang_install_dir }}
