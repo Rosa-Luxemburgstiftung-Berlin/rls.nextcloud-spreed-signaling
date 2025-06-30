@@ -1,0 +1,56 @@
+---
+name: molecule test ansible alphabetagamma
+on:
+  pull_request:
+  push:
+  schedule:
+    - cron: "50 6 * * 1"
+jobs:
+  molecule:
+    name: ansible
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        installversion:
+          - deborig
+          - fromsrc202
+          - fromsrc203
+        ansible:
+          - alphabetagamma
+        distro:
+          - debian12
+        include:
+          - ansible: alphabetagamma
+            pip3deps: "ansible==12.0.0a7 ansible-core==2.19.0b7 yamllint ansible-lint requests==2.32.4"
+          - installversion: fromsrc202
+            molecule_struktur_spreed_build_version: v2.0.2
+            molecule_golang_version: "1.23.5"
+            moleculescenario: fromsrc
+          - installversion: fromsrc203
+            molecule_struktur_spreed_build_version: v2.0.3
+            molecule_golang_version: "1.23.5"
+            moleculescenario: fromsrc
+          - installversion: deborig
+            moleculescenario: deborig
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: 'rls.nextcloud-spreed-signaling'
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.11
+
+      - name: Install test dependencies.
+        run: pip3 install ${{ matrix.pip3deps }}
+
+      - name: run molecule tests
+        run: molecule test --scenario-name ${{ matrix.moleculescenario }}
+        working-directory: 'rls.nextcloud-spreed-signaling'
+        env:
+          PY_COLORS: '1'
+          ANSIBLE_FORCE_COLOR: '1'
+          molecule_struktur_spreed_build_version: ${{ matrix.molecule_struktur_spreed_build_version }}
+          MOLECULE_DISTRO: ${{ matrix.distro }}
