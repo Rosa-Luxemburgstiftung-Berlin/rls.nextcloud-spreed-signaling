@@ -3,8 +3,8 @@
   hosts: all
   vars:
     struktur_spreed_from_source: true
-    struktur_spreed_build_version: "{{ lookup('ansible.builtin.env','molecule_struktur_spreed_build_version') }}"
-    golang_version: "{{ lookup('ansible.builtin.env','molecule_golang_version' default='1.23.5') }}"
+    struktur_spreed_build_version: "{{ lookup('ansible.builtin.env', 'molecule_struktur_spreed_build_version') }}"
+    golang_version: "{{ lookup('ansible.builtin.env', 'molecule_golang_version', default='1.23.5') }}"
     golang_install_dir: /opt/go
   pre_tasks:
     - name: debug VAR struktur_spreed_build_version
