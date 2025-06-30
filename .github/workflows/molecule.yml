@@ -27,9 +27,11 @@ jobs:
             pip3deps: 'ansible molecule "molecule-plugins[docker]" yamllint ansible-lint requests==2.31.0'
           - installversion: fromsrc202
             molecule_struktur_spreed_build_version: v2.0.2
+            molecule_golang_version: "1.23.5"
             moleculescenario: fromsrc
           - installversion: fromsrc203
             molecule_struktur_spreed_build_version: v2.0.3
+            molecule_golang_version: "1.23.5"
             moleculescenario: fromsrc
           - installversion: deborig
             moleculescenario: deborig
