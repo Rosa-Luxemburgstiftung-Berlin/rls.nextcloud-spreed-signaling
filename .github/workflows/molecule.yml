@@ -12,9 +12,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        scenario:
+        installversion:
           - deborig
-          - fromsrc
+          - fromsrc202
+          - fromsrc203
         ansible:
           - latest
           #- pinned
@@ -23,11 +24,21 @@ jobs:
           - debian12
         include:
           - ansible: latest
-            pip3deps: 'dnspython ansible molecule "molecule-plugins[docker]" yamllint ansible-lint requests==2.31.0'
+            pip3deps: 'ansible molecule "molecule-plugins[docker]" yamllint ansible-lint requests==2.31.0'
+          - installversion: fromsrc202
+            molecule_struktur_spreed_build_version: v2.0.2
+            molecule_golang_version: "1.23.5"
+            moleculescenario: fromsrc
+          - installversion: fromsrc203
+            molecule_struktur_spreed_build_version: v2.0.3
+            molecule_golang_version: "1.23.5"
+            moleculescenario: fromsrc
+          - installversion: deborig
+            moleculescenario: deborig
           #- ansible: pinned
-          #  pip3deps: 'dnspython "ansible==8.6.0" "molecule-plugins[docker]" "yamllint==1.32.0" "ansible-lint==6.22.0"'
+          #  pip3deps: '"ansible==8.6.0" "molecule-plugins[docker]" "yamllint==1.32.0" "ansible-lint==6.22.0"'
           #- ansible: legacy
-          #  pip3deps: 'dnspython "ansible==2.9.27" "molecule[docker,lint]==3.2.3" "yamllint==1.24.2" "ansible-lint==4.2.0" "requests<2.29" "urllib3<2"'
+          #  pip3deps: '"ansible==2.9.27" "molecule[docker,lint]==3.2.3" "yamllint==1.24.2" "ansible-lint==4.2.0" "requests<2.29" "urllib3<2"'
     steps:
       - uses: actions/checkout@v4
         with:
@@ -43,9 +54,10 @@ jobs:
         run: pip3 install ${{ matrix.pip3deps }}
 
       - name: run molecule tests
-        run: molecule test --scenario-name ${{ matrix.scenario }}
+        run: molecule test --scenario-name ${{ matrix.moleculescenario }}
         working-directory: 'rls.nextcloud-spreed-signaling'
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
+          molecule_struktur_spreed_build_version: ${{ matrix.molecule_struktur_spreed_build_version }}
           MOLECULE_DISTRO: ${{ matrix.distro }}
