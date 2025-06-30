@@ -49,6 +49,9 @@ struktur_spreed_from_source: false
 # you can define a tag / version to pin the build too
 # struktur_spreed_build_version: v0.4.1
 
+# set this to true to allow updates of a existing installation from src
+struktur_spreed_build_update: false
+
 # use gantsign.golang role in order to install a newer version of golang
 # set to a version in order to not install the debian version
 golang_version: false
