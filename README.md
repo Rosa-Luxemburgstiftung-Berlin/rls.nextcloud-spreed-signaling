@@ -40,6 +40,13 @@ requires role [gantsign.golang](https://github.com/gantsign/ansible-role-golang)
     - rls.nextcloud-spreed-signaling
 ```
 
+### update from src
+if you like to update a existing installation from source, run:
+```
+ansible-playbook -e struktur_spreed_build_update=true -e struktur_spreed_build_version=v2.0.3 ...
+```
+
+
 ## debian package from struktur ag repo
 
 requires a subscription key
