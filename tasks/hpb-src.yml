@@ -18,6 +18,7 @@
     dest: /var/tmp/nextcloud-spreed-signaling
     version: "{{ struktur_spreed_build_version | default(omit) }}"
     update: "{{ struktur_spreed_build_update | default(false) }}"
+  diff: false
 
 - name: allow update of nextcloud-spreed-signaling
   ansible.builtin.file:
