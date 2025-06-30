@@ -14,7 +14,8 @@ jobs:
       matrix:
         scenario:
           - deborig
-          - fromsrc
+          - fromsrc202
+          - fromsrc203
         ansible:
           - latest
           #- pinned
@@ -24,6 +25,10 @@ jobs:
         include:
           - ansible: latest
             pip3deps: 'ansible molecule "molecule-plugins[docker]" yamllint ansible-lint requests==2.31.0'
+          - scenario: fromsrc202
+            molecule_struktur_spreed_build_version: v2.0.2
+          - scenario: fromsrc203
+            molecule_struktur_spreed_build_version: v2.0.3
           #- ansible: pinned
           #  pip3deps: '"ansible==8.6.0" "molecule-plugins[docker]" "yamllint==1.32.0" "ansible-lint==6.22.0"'
           #- ansible: legacy
@@ -48,4 +53,5 @@ jobs:
         env:
           PY_COLORS: '1'
           ANSIBLE_FORCE_COLOR: '1'
+          molecule_struktur_spreed_build_version: ${{ matrix.molecule_struktur_spreed_build_version }}
           MOLECULE_DISTRO: ${{ matrix.distro }}
