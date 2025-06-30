@@ -1,5 +1,6 @@
 [![ansible-lint](https://github.com/Rosa-Luxemburgstiftung-Berlin/rls.nextcloud-spreed-signaling/actions/workflows/lint.yml/badge.svg)](https://github.com/Rosa-Luxemburgstiftung-Berlin/rls.nextcloud-spreed-signaling/actions/workflows/lint.yml)
 [![molecule test](https://github.com/Rosa-Luxemburgstiftung-Berlin/rls.nextcloud-spreed-signaling/actions/workflows/molecule.yml/badge.svg)](https://github.com/Rosa-Luxemburgstiftung-Berlin/rls.nextcloud-spreed-signaling/actions/workflows/molecule.yml)
+![Ansible 12 read](https://img.shields.io/badge/ansible_12-ready-green?logo=ansible&labelColor=black)
 
 # rls.nextcloud-spreed-signaling
 ansible role to setup a standalone nextcloud-spreed-signaling server :  https://github.com/strukturag/nextcloud-spreed-signaling
